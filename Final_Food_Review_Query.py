@@ -1,10 +1,12 @@
+# import all libraries
 import pandas as pd
 import numpy
 import sqlite3
 from pandasgui import show
-
+# connect to database
 conn = sqlite3.connect("database.sqlite")
-
+# read the sql
+# answer to number one question
 df = pd.read_sql_query("""select UserId, ProductId,
                           ProfileName, Time,
                           Score, Text, COUNT(*)
@@ -12,7 +14,7 @@ df = pd.read_sql_query("""select UserId, ProductId,
                           WHERE Score != 3
                           GROUP BY UserId
                           HAVING COUNT(*) > 1""", conn)
-
+# answer to number two question
 ONE_AND_TWO = df
 show(ONE_AND_TWO.head())
 
@@ -22,7 +24,7 @@ df.drop_duplicates(subset="ProductId",
 
 THREE = df
 show(THREE.head())
-
+# answer to number three question
 POSITIVE_REVIEWS = df['Score'].value_counts()[5] + df['Score'].value_counts()[4]
 NEGATIVE_REVIEWS = df['Score'].value_counts()[2] + df['Score'].value_counts()[1]
 
@@ -41,7 +43,7 @@ class MLStripper(HTMLParser):
         self.fed.append(d)
     def get_data(self):
         return ''.join(self.fed)
-
+# answer to number five question
 def strip_tags(html):
     s = MLStripper()
     s.feed(html)
@@ -53,7 +55,7 @@ FIFTH = df
 show(FIFTH.head())
 
 import re
-
+# answer to number six question
 def remove_characters(text):
     return re.sub("[^A-z0-9\s]+", "", text)
 
@@ -61,7 +63,7 @@ df['Text'] = df['Text'].apply(remove_characters)
 
 SIXTH = df
 show(SIXTH.head())
-
+# answer to number seven question
 def remove_non_english(text):
     return re.sub("[^a-zA-Z\s]", "", text)
 
@@ -69,7 +71,7 @@ df['Text'] = df['Text'].apply(remove_non_english)
 
 SEVENTH = df
 show(SEVENTH.head())
-
+# answer to number eight question
 def check_length(text):
     text = text.split()
     contain = []
@@ -85,7 +87,7 @@ df['Text'] = df['Text'].apply(check_length)
 
 EIGHT = df
 show(EIGHT.head())
-
+# answer to number nine question
 def lower_case(text):
     return text.lower()
 
@@ -93,7 +95,7 @@ df['Text'] = df['Text'].apply(lower_case)
 
 NINTH = df
 show(NINTH.head())
-
+# answer to number ten question
 import nltk
 
 def remove_stopwords(text):
@@ -116,7 +118,7 @@ df['Text'] = df['Text'].apply(remove_stopwords)
 
 TENTH = df
 show(TENTH.head())
-
+# answer to number eleven question
 '''
 def stem_thy_words(text):
     from nltk.corpus import stopwords
