@@ -6,7 +6,6 @@ from pandasgui import show
 # connect to database
 conn = sqlite3.connect("database.sqlite")
 # read the sql
-# answer to number one question
 df = pd.read_sql_query("""select UserId, ProductId,
                           ProfileName, Time,
                           Score, Text, COUNT(*)
@@ -14,17 +13,17 @@ df = pd.read_sql_query("""select UserId, ProductId,
                           WHERE Score != 3
                           GROUP BY UserId
                           HAVING COUNT(*) > 1""", conn)
-# answer to number two question
+# answer to number one and two question
 ONE_AND_TWO = df
 show(ONE_AND_TWO.head())
 
 df.sort_values('ProductId', inplace=True)
 df.drop_duplicates(subset="ProductId",
                    keep=False, inplace=True)
-
+# answer to number three question
 THREE = df
 show(THREE.head())
-# answer to number three question
+# answer to number four question
 POSITIVE_REVIEWS = df['Score'].value_counts()[5] + df['Score'].value_counts()[4]
 NEGATIVE_REVIEWS = df['Score'].value_counts()[2] + df['Score'].value_counts()[1]
 
@@ -132,4 +131,5 @@ def stem_thy_words(text):
 
 df['Text'] = df['Text'].apply(stem_thy_words)
 
-df.head()
+ELEVENTH = df
+show(ELEVENTH.head())
