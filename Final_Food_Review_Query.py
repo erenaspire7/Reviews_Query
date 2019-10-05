@@ -119,10 +119,11 @@ df['Text'] = df['Text'].apply(remove_stopwords)
 TENTH = df
 show(TENTH.head())
 # answer to number eleven question
-'''
+# answer to number eleven question
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
+import nltk
 def stem_thy_words(text):
-    from nltk.corpus import stopwords
-    from nltk.stem import SnowballStemmer
 
     snowball_stemmer = SnowballStemmer('english')
     word_tokens = nltk.word_tokenize(text)
@@ -132,4 +133,3 @@ def stem_thy_words(text):
 df['Text'] = df['Text'].apply(stem_thy_words)
 
 df.head()
-'''
